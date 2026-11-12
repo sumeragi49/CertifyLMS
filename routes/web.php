@@ -25,6 +25,7 @@ use App\Http\Controllers\MockExamQuestionController;
 use App\Http\Controllers\MockExamSessionController;
 use App\Http\Controllers\MockExamSessionMonitorController;
 use App\Http\Controllers\PartController;
+use App\Http\Controllers\QaThreadController;
 use App\Http\Controllers\QuestionCategoryController;
 use App\Http\Controllers\QuizHistoryController;
 use App\Http\Controllers\QuizStatsController;
@@ -73,6 +74,7 @@ Route::middleware('auth')->group(function () {
     Route::get('enrollments/{enrollment}', [EnrollmentController::class, 'show'])
         ->withTrashed()
         ->name('enrollments.show');
+
 });
 
 // ============================================================
@@ -98,6 +100,22 @@ Route::middleware(['auth', 'role:student', 'active-learning'])->group(function (
     // 修了証受領(受講生自己発火、graduated は active-learning でブロックされるため新規受領不可)
     Route::post('enrollments/{enrollment}/receive-certificate', [ReceiveCertificateController::class, 'store'])
         ->name('enrollments.receiveCertificate');
+
+    //thread (スレッド作成 / 更新 / 削除 / 解決遷移)
+    Route::get('qa-thread/create', [QaThreadController::class, 'create'])
+        ->name('qa-board.create');
+    Route::post('qa-board', [QaThreadController::class, 'store'])
+        ->name('qa-board.store');
+    Route::get('qa-board/{thread}/edit', [QaThreadController::class, 'edit'])
+        ->name('qa-board.edit');
+    Route::put('qa-board/{thread}', [QaThreadController::class, 'update'])
+        ->name('qa-board.update');
+    Route::delete('qa-board/{thread}', [QaThreadController::class, 'destroy'])
+        ->name('qa-board.destroy');
+    Route::post('qa-board/{thread}/resolve', [QaThreadController::class, 'resolve'])
+        ->name('qa-board.resolve');
+    Route::post('qa-board/{thread}/unresolve', [QaThreadController::class, 'unResolve'])
+        ->name('qa-board.unresolve');
 });
 
 // ============================================================
@@ -192,6 +210,18 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
         ->name('admin.enrollments.updateExamDate');
     Route::post('enrollments/{enrollment}/fail', [EnrollmentManagementController::class, 'fail'])
         ->name('admin.enrollments.fail');
+
+    // スレッド管理 — スレッド閲覧,削除
+    Route::get('qa-board', [QaThreadController::class, 'index'])
+        ->name('admin.qa-board.index');
+    Route::get('qa-board/{thread}', [QaThreadController::class, 'show'])
+        ->name('admin.qa-board.show');
+    Route::delete('qa-board/{thread}', [QaThreadController::class, 'destroy'])
+        ->name('admin.qa-board.destroy');
+
+    // リプライの削除
+    Route::delete('qa-board/{thread}/replies/{reply}', [QaThreadReplyController::class, 'destroy'])
+        ->name('admin.qa-board.reply.destroy');
 });
 
 // ============================================================
@@ -305,6 +335,7 @@ Route::middleware(['auth', 'role:admin,coach'])->prefix('admin')->group(function
         ->name('admin.section-questions.publish');
     Route::post('section-questions/{sectionQuestion}/unpublish', [SectionQuestionController::class, 'unpublish'])
         ->name('admin.section-questions.unpublish');
+
 });
 
 // ============================================================
@@ -464,6 +495,27 @@ Route::middleware(['auth', 'role:coach'])
 Route::middleware(['auth', 'role:student', 'active-learning'])->prefix('meeting-quota')->name('meeting-quota.')->group(function () {
     // 面談回数履歴
     Route::get('history', [MeetingQuotaHistoryController::class, 'index'])->name('history');
+});
+
+// ============================================================
+// 受講生・コーチ共有 — thread (スレッド一覧 / 詳細),reply(作成 / 更新 / 削除)
+// ============================================================
+Route::middleware(['auth', 'role:student,coach', 'active-learning'])->group(function () {
+    //thread (スレッド一覧 / 詳細)
+    Route::get('qa-board', [QaThreadController::class, 'index'])
+        ->name('qa-board.index');
+    Route::get('qa-board/{thread}', [QaThreadController::class, 'show'])
+        ->name('qa-board.show');
+
+    //reply(作成 / 更新 / 削除)
+    Route::post('qa-board/{thread}/replies', [QaThreadReplyController::class, 'store'])
+        ->name('qa-board.replies.store');
+    Route::get('qa-board/{thread}/replies/{reply}/edit', [QaThreadReplyController::class, 'edit'])
+        ->name('qa-board.replies.edit');
+    Route::put('qa-board/{thread}/replies/{reply}', [QaThreadReplyController::class, 'update'])
+        ->name('qa-board.replies.update');
+    Route::delete('/qa-board/{thread}/replies/{reply}', [QaThreadReplyController::class, 'destroy'])
+        ->name('qa-board.replies.destroy');
 });
 
 // ============================================================

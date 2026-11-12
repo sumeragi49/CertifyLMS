@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\QaThreadStatus;
 use Database\Factories\ThreadFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
@@ -22,6 +23,11 @@ class Thread extends Model
         'status',
     ];
 
+    protected $casts = [
+        'status' => QaThreadStatus::class,
+    ];
+
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -30,5 +36,28 @@ class Thread extends Model
     public function certification(): BelongsTo
     {
         return $this->belongsTo(Certification::class);
+    }
+
+    public function replies():hasMany
+    {
+        return $this->hasMany(Reply::class);
+    }
+
+    public function scopeKeyword(Builder $query, ?string $keyword): Builder
+    {
+        if ($keyword === null || $keyword === '') {
+            return $query;
+        }
+
+        return $query->where('body', 'LIKE', '%'.$keyword.'%');
+    }
+
+    public function scopeCertificationSearch(Builder $query, ?string $certification_id): Builder
+    {
+        if ($certification_id === null || $certification_id === '') {
+            return $query;
+        }
+
+        return $query->where('certification_id', $certification_id);
     }
 }
