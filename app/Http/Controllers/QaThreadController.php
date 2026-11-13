@@ -5,21 +5,20 @@ namespace App\Http\Controllers;
 use App\Enums\QaThreadStatus;
 use App\Http\Requests\Thread\IndexRequest;
 use App\Http\Requests\Thread\StoreRequest;
+use App\Http\Requests\Thread\UpdateRequest;
 use App\Models\QaThread;
 use App\Models\Certification;
 use App\UseCases\Thread\IndexAction;
 use App\UseCases\Thread\CreateAction;
 use App\UseCases\Thread\StoreAction;
 use App\UseCases\Thread\ShowAction;
+use App\UseCases\Thread\UpdateAction;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Carbon\Carbon;
 
 class QaThreadController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(IndexRequest $request,IndexAction $action): view
     {
         $this->authorize('viewAny', QaThread::class);
@@ -41,9 +40,6 @@ class QaThreadController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create(Certification $certifications, CreateAction $action): View
     {
         $this->authorize('create', QaThread::class);
@@ -61,14 +57,14 @@ class QaThreadController extends Controller
         $thread = $action($request->user(), $request->validated());
 
         return redirect()
-            ->route('qa-thread.show', $thread)
-            ->with('success', '資格を作成しました。');
+            ->route('qa-board.show', $thread)
+            ->with('success', 'スレッドを作成しました。');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(QaThread $thread, ShowAction $action)
+    public function show(QaThread $thread, ShowAction $action): view
     {
         $this->authorize('view', $thread);
 
@@ -92,9 +88,13 @@ class QaThreadController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(QaThread $thread, UpdateRequest $request, UpdateAction $action): RedirectResponse
     {
-        //
+        $action($thread,$request->validated());
+
+        return redirect()
+            ->route('qa-board.show', $thread)
+            ->with('success', 'スレッドを更新しました。');
     }
 
     /**

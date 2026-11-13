@@ -108,7 +108,7 @@ Route::middleware(['auth', 'role:student', 'active-learning'])->group(function (
         ->name('qa-board.store');
     Route::get('qa-board/{thread}/edit', [QaThreadController::class, 'edit'])
         ->name('qa-board.edit');
-    Route::put('qa-board/{thread}', [QaThreadController::class, 'update'])
+    Route::patch('qa-board/{thread}', [QaThreadController::class, 'update'])
         ->name('qa-board.update');
     Route::delete('qa-board/{thread}', [QaThreadController::class, 'destroy'])
         ->name('qa-board.destroy');

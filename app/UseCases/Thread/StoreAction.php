@@ -20,7 +20,6 @@ final class StoreAction
             'title' => $validated['title'],
             'body' => $validated['body'],
             'status' => QaThreadStatus::Unresolved->value,
-            'resolved_at' => now();
         ]));
     }
 }
