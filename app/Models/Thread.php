@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-
+/*
 class Thread extends Model
 {
     use HasFactory, HasUlids;
@@ -21,10 +21,12 @@ class Thread extends Model
         'title',
         'body',
         'status',
+        'resolved_at',
     ];
 
     protected $casts = [
         'status' => QaThreadStatus::class,
+        'resolved_at' => 'datetime',
     ];
 
 
@@ -61,3 +63,4 @@ class Thread extends Model
         return $query->where('certification_id', $certification_id);
     }
 }
+*/

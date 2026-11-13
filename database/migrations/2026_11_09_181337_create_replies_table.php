@@ -16,8 +16,8 @@ return new class extends Migration
             $table->foreignUlid('user_id')
                   ->constrained('users')
                   ->restrictOnDelete();
-            $table->foreignUlid('thread_id')
-                  ->constrained('threads')
+            $table->foreignUlid('qa_thread_id')
+                  ->constrained('qa_threads')
                   ->cascadeOnDelete();
             $table->text('body');
             $table->timestamps();

@@ -27,6 +27,6 @@ class Reply extends Model
 
     public function thread(): BelongsTo
     {
-        return $this->belongsTo(Thread::class);
+        return $this->belongsTo(QaThread::class);
     }
 }

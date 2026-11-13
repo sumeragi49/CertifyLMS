@@ -5,12 +5,13 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
 use App\Models\Certification;
-use App\Models\Thread;
+use App\Models\QaThread;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
-class ThreadSeeder extends Seeder
+class QaThreadSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -36,8 +37,9 @@ class ThreadSeeder extends Seeder
             'title' => '模擬試験後について',
             'body' => '模擬試験で目標点数に達しない場合再試験などを受けることは可能ですか',
             'status' => 'resolved',
+            'resolved_at' => now(),
         ];
-        DB::table('threads')->insert($param);
+        DB::table('qa_threads')->insert($param);
 
         $param = [
             'id' => (string) Str::ulid(),
@@ -47,6 +49,6 @@ class ThreadSeeder extends Seeder
             'body' => '定期的な小テストで目標点数以下が続く場合,模擬試験を受けられないなどの制約はありますか。',
             'status' => 'unresolved',
         ];
-        DB::table('threads')->insert($param);
+        DB::table('qa_threads')->insert($param);
     }
 }

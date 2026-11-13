@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('threads', function (Blueprint $table) {
+        Schema::create('qa_threads', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->foreignUlid('user_id')
                   ->constrained('users')
@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('title', 200);
             $table->text('body');
             $table->string('status', 20)->default('unresolved');
+            $table->timestamp('resolved_at')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('threads');
+        Schema::dropIfExists('qa_threads');
     }
 };
