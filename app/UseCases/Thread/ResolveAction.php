@@ -19,10 +19,5 @@ final class ResolveAction
 
             return $thread->fresh();
         });
-        /*
-        return DB::transaction(fn () => QaThread::update([
-            'status' => QaThreadStatus::Resolved->value,
-        ]));
-        */
     }
 }

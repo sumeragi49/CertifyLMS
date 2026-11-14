@@ -15,6 +15,7 @@ use App\UseCases\Thread\ShowAction;
 use App\UseCases\Thread\UpdateAction;
 use App\UseCases\Thread\DestroyAction;
 use App\UseCases\Thread\ResolveAction;
+use App\UseCases\Thread\UnResolveAction;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Carbon\Carbon;
@@ -122,5 +123,16 @@ class QaThreadController extends Controller
         return redirect()
             ->route('qa-board.show', $thread)
             ->with('success', 'スレッドを解決済にしました。');
+    }
+
+    public function unResolve(QaThread $thread, UnResolveAction $action): RedirectResponse
+    {
+        $this->authorize('unResolve', $thread);
+
+        $action($thread);
+
+        return redirect()
+            ->route('qa-board.show', $thread)
+            ->with('success', 'スレッドを未解決にしました。');
     }
 }

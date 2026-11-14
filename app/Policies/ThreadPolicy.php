@@ -59,6 +59,14 @@ class ThreadPolicy
     }
 
     /**
+     * Determine whether the user can unresolve the model.
+     */
+    public function unResolve(User $user, QaThread $thread): bool
+    {
+        return $this->canManage($user, $thread);
+    }
+
+    /**
      * Determine whether the user can permanently delete the model.
      */
     public function forceDelete(User $user, Thread $thread): bool
