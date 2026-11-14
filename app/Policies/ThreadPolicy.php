@@ -51,11 +51,11 @@ class ThreadPolicy
     }
 
     /**
-     * Determine whether the user can restore the model.
+     * Determine whether the user can resolve the model.
      */
-    public function restore(User $user, QaThread $thread): bool
+    public function resolve(User $user, QaThread $thread): bool
     {
-        //
+        return $this->canManage($user, $thread);
     }
 
     /**

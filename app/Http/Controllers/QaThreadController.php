@@ -13,6 +13,8 @@ use App\UseCases\Thread\CreateAction;
 use App\UseCases\Thread\StoreAction;
 use App\UseCases\Thread\ShowAction;
 use App\UseCases\Thread\UpdateAction;
+use App\UseCases\Thread\DestroyAction;
+use App\UseCases\Thread\ResolveAction;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Carbon\Carbon;
@@ -100,8 +102,25 @@ class QaThreadController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(QaThread $thread, DestroyAction $action): RedirectResponse
     {
-        //
+        $this->authorize('delete', $thread);
+
+        $action($thread);
+
+        return redirect()
+            ->route('qa-board.index')
+            ->with('success', 'スレッドを削除しました。');
+    }
+
+    public function resolve(QaThread $thread, ResolveAction $action): RedirectResponse
+    {
+        $this->authorize('resolve', $thread);
+
+        $action($thread);
+
+        return redirect()
+            ->route('qa-board.show', $thread)
+            ->with('success', 'スレッドを解決済にしました。');
     }
 }
