@@ -8,6 +8,7 @@ use App\Http\Requests\Thread\StoreRequest;
 use App\Http\Requests\Thread\UpdateRequest;
 use App\Models\QaThread;
 use App\Models\Certification;
+use App\Models\QaReply;
 use App\UseCases\Thread\IndexAction;
 use App\UseCases\Thread\CreateAction;
 use App\UseCases\Thread\StoreAction;

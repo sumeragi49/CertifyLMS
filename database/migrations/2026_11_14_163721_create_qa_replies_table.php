@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('replies', function (Blueprint $table) {
+        Schema::create('qa_replies', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->foreignUlid('user_id')
                   ->constrained('users')
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('replies');
+        Schema::dropIfExists('qa_replies');
     }
 };

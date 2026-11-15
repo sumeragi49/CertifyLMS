@@ -15,7 +15,7 @@ class ThreadPolicy
     public function viewAny(User $user): bool
     {
         //return $user->role === UserRole::Student;
-        return in_array($user->role, [UserRole::Student, UserRole::Coach], true);
+        return in_array($user->role, [UserRole::Admin, UserRole::Student, UserRole::Coach], true);
     }
 
     /**
@@ -77,12 +77,16 @@ class ThreadPolicy
     private function canManage(User $student, QaThread $thread): bool
     {
         return match ($student->role) {
-            UserRole::Student => true
+            UserRole::Student => true,
+            UserRole::Coach => false,
+            UserRole::Admin => false,
         };
     }
 
+    /*
     private function createdStudent(User $student, QaThread $thread): bool
     {
         return $thread->user()->where('users.id', $student->id)->exists();
     }
+    */
 }

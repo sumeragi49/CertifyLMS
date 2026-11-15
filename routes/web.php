@@ -26,6 +26,7 @@ use App\Http\Controllers\MockExamSessionController;
 use App\Http\Controllers\MockExamSessionMonitorController;
 use App\Http\Controllers\PartController;
 use App\Http\Controllers\QaThreadController;
+use App\Http\Controllers\QaThreadReplyController;
 use App\Http\Controllers\QuestionCategoryController;
 use App\Http\Controllers\QuizHistoryController;
 use App\Http\Controllers\QuizStatsController;

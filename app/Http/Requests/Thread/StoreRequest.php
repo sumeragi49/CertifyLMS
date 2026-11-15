@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Thread;
 
+use App\Models\QaThread;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRequest extends FormRequest

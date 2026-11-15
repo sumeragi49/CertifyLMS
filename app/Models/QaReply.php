@@ -10,13 +10,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Reply extends Model
+class QaReply extends Model
 {
     use HasFactory, HasUlids;
 
     protected $fillable = [
         'user_id',
-        'thread_id',
+        'qa_thread_id',
         'body',
     ];
 

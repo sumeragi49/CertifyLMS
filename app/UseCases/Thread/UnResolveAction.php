@@ -8,7 +8,7 @@ use App\Enums\QaThreadStatus;
 use App\Models\QaThread;
 use Illuminate\Support\Facades\DB;
 
-final class UnresolveAction
+final class UnResolveAction
 {
     public function __invoke(QaThread $thread): QaThread
     {

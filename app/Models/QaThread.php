@@ -42,7 +42,7 @@ class QaThread extends Model
 
     public function replies():hasMany
     {
-        return $this->hasMany(Reply::class);
+        return $this->hasMany(QaReply::class);
     }
 
     public function scopeKeyword(Builder $query, ?string $keyword): Builder

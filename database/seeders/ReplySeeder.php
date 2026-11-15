@@ -15,6 +15,7 @@ class ReplySeeder extends Seeder
     /**
      * Run the database seeds.
      */
+    /*
     public function run(): void
     {
         $student = User::query()->where('email', 'student@certify-lms.test')->first();
@@ -37,6 +38,8 @@ class ReplySeeder extends Seeder
             'qa_thread_id' => $thread->id,
             'body' => '定期的な小テストで目標点数以下が続く場合,模擬試験を受けられないなどの制約はありません。ただしこちら側から「もう少し学習を重ねた方が良い」などのアドバイスはさせていただきます。',
         ];
-        DB::table('replies')->insert($param);
+        DB::table('qa_replies')->insert($param);
     }
+    */
 }
+
