@@ -39,7 +39,7 @@ class ThreadPolicy
      */
     public function update(User $user, QaThread $thread): bool
     {
-        return $this->canManage($user, $thread);
+        return $user->id === $thread->user_id;
     }
 
     /**
@@ -47,7 +47,7 @@ class ThreadPolicy
      */
     public function delete(User $user, QaThread $thread): bool
     {
-        return $this->canManage($user, $thread);
+        return $user->id === $thread->user_id || in_array($user->role, [UserRole::Admin], true);
     }
 
     /**
@@ -55,7 +55,7 @@ class ThreadPolicy
      */
     public function resolve(User $user, QaThread $thread): bool
     {
-        return $this->canManage($user, $thread);
+        return $user->id === $thread->user_id;
     }
 
     /**
@@ -63,7 +63,7 @@ class ThreadPolicy
      */
     public function unResolve(User $user, QaThread $thread): bool
     {
-        return $this->canManage($user, $thread);
+        return $user->id === $thread->user_id;
     }
 
     /**
@@ -74,6 +74,7 @@ class ThreadPolicy
         //
     }
 
+    /*
     private function canManage(User $student, QaThread $thread): bool
     {
         return match ($student->role) {
@@ -82,6 +83,7 @@ class ThreadPolicy
             UserRole::Admin => false,
         };
     }
+    */
 
     /*
     private function createdStudent(User $student, QaThread $thread): bool

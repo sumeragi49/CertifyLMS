@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Enums\UserRole;
+use App\Enums\QaThreadStatus;
 use App\Http\Requests\Reply\StoreRequest;
 use App\Http\Requests\Reply\UpdateRequest;
+use App\Models\User;
 use App\Models\QaThread;
 use App\Models\QaReply;
 use App\UseCases\ThreadReply\StoreAction;
@@ -81,9 +83,17 @@ class QaThreadReplyController extends Controller
      */
     public function destroy(QaThread $thread, QaReply $reply, DestroyAction $action): RedirectResponse
     {
+        $user = auth()->user();
+
         $this->authorize('delete', $reply);
 
         $action($reply);
+
+        if ($user->role === UserRole::Admin) {
+            return redirect()
+                ->route('admin.qa-board.show', $thread)
+                ->with('success', 'リプライを削除しました。');
+        }
 
         return redirect()
             ->route('qa-board.show', $thread)

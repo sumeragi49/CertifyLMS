@@ -222,7 +222,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 
     // リプライの削除
     Route::delete('qa-board/{thread}/replies/{reply}', [QaThreadReplyController::class, 'destroy'])
-        ->name('admin.qa-board.reply.destroy');
+        ->name('admin.qa-board.replies.destroy');
 });
 
 // ============================================================

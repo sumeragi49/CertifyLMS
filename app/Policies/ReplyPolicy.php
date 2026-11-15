@@ -21,9 +21,9 @@ class ReplyPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, QaReply $qaReply): bool
+    public function view(User $user, QaReply $reply): bool
     {
-        return $this->canManage($user, $reply);
+        return $user->id === $reply->user_id;
     }
 
     /**
@@ -39,7 +39,7 @@ class ReplyPolicy
      */
     public function update(User $user, QaReply $reply): bool
     {
-        return $this->canManage($user, $reply);
+        return $user->id === $reply->user_id;
     }
 
     /**
@@ -47,7 +47,7 @@ class ReplyPolicy
      */
     public function delete(User $user, QaReply $reply): bool
     {
-        return $this->canManage($user, $reply);
+        return $user->id === $reply->user_id || in_array($user->role, [UserRole::Admin], true);
     }
 
     /**
