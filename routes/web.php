@@ -513,7 +513,7 @@ Route::middleware(['auth', 'role:student,coach', 'active-learning'])->group(func
         ->name('qa-board.replies.store');
     Route::get('qa-board/{thread}/replies/{reply}/edit', [QaThreadReplyController::class, 'edit'])
         ->name('qa-board.replies.edit');
-    Route::put('qa-board/{thread}/replies/{reply}', [QaThreadReplyController::class, 'update'])
+    Route::patch('qa-board/{thread}/replies/{reply}', [QaThreadReplyController::class, 'update'])
         ->name('qa-board.replies.update');
     Route::delete('/qa-board/{thread}/replies/{reply}', [QaThreadReplyController::class, 'destroy'])
         ->name('qa-board.replies.destroy');

@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\Reply\StoreRequest;
+use App\Http\Requests\Reply\UpdateRequest;
 use App\Models\QaThread;
 use App\Models\QaReply;
 use App\UseCases\ThreadReply\StoreAction;
+use App\UseCases\ThreadReply\UpdateAction;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -51,17 +53,29 @@ class QaThreadReplyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(QaThread $thread, QaReply $reply): view
     {
-        //
+        $this->authorize('update', $reply);
+
+        return view('qa-thread.reply-edit', [
+            'thread' => $thread,
+            'reply' => $reply
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(QaThread $thread, QaReply $reply, UpdateRequest $request, UpdateAction $action)
     {
-        //
+        $action($reply,$request->validated());
+
+        return redirect()
+            ->route('qa-board.show', [
+                'thread' => $thread,
+                'reply' =>  $reply,
+            ])
+            ->with('success', 'スレッドを更新しました。');
     }
 
     /**
