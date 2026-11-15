@@ -9,6 +9,7 @@ use App\Models\QaThread;
 use App\Models\QaReply;
 use App\UseCases\ThreadReply\StoreAction;
 use App\UseCases\ThreadReply\UpdateAction;
+use App\UseCases\ThreadReply\DestroyAction;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -66,23 +67,26 @@ class QaThreadReplyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(QaThread $thread, QaReply $reply, UpdateRequest $request, UpdateAction $action)
+    public function update(QaThread $thread, QaReply $reply, UpdateRequest $request, UpdateAction $action): RedirectResponse
     {
         $action($reply,$request->validated());
 
         return redirect()
-            ->route('qa-board.show', [
-                'thread' => $thread,
-                'reply' =>  $reply,
-            ])
-            ->with('success', 'スレッドを更新しました。');
+            ->route('qa-board.show', $thread)
+            ->with('success', 'リプライを更新しました。');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(QaThread $thread, QaReply $reply, DestroyAction $action): RedirectResponse
     {
-        //
+        $this->authorize('delete', $reply);
+
+        $action($reply);
+
+        return redirect()
+            ->route('qa-board.show', $thread)
+            ->with('success', 'リプライを削除しました。');
     }
 }
