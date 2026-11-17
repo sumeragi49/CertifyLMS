@@ -87,7 +87,7 @@ class IndexTest extends TestCase
 
         $student = $qaThread1->user;
 
-        $response = $this->actingAs($student)->get(route('qa-board.index', ));
+        $response = $this->actingAs($student)->get(route('qa-board.index', ['status' => 'unresolved']));
 
         $response->assertOk();
         $response->assertSee('試験本番について');
