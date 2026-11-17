@@ -27,7 +27,7 @@ class UpdateTest extends TestCase
 
         $qaUpdatedThread = QaThread::latest('updated_at')->first();
 
-        $response->assertRedirect(route('qa-board.show', ['thread' => $qaUpdatedThread]));
+        $response->assertRedirect(route('qa-board.show', ['thread' => $qaThread]));
 
         $this->assertDatabaseHas('qa_threads', [
             'title' => $qaUpdatedThread->title,
