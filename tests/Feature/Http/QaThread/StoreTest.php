@@ -26,7 +26,7 @@ class StoreTest extends TestCase
             'body' => '難易度ごとにできる問題を変更することは可能ですか？',
         ];
 
-        $response = $this->actingAs($student)->post(route('qa-board.store', $qaThread));
+        $response = $this->actingAs($student)->post(route('qa-board.store'),$qaThread);
 
         $newThread = QaThread::latest('id')->first();
 
@@ -53,7 +53,7 @@ class StoreTest extends TestCase
             'body' => '難易度ごとにできる問題を変更することは可能ですか？',
         ];
 
-        $response = $this->actingAs($student)->post(route('qa-board.store', $qaThread));
+        $response = $this->actingAs($student)->post(route('qa-board.store'),$qaThread);
 
         $response->assertSessionHasErrors('certification_id');
     }
@@ -70,7 +70,7 @@ class StoreTest extends TestCase
             'body' => '難易度ごとにできる問題を変更することは可能ですか？',
         ];
 
-        $response = $this->actingAs($student)->post(route('qa-board.store', $qaThread));
+        $response = $this->actingAs($student)->post(route('qa-board.store'),$qaThread);
 
         $response->assertSessionHasErrors('title');
     }
@@ -87,7 +87,7 @@ class StoreTest extends TestCase
             'body' => '',
         ];
 
-        $response = $this->actingAs($student)->post(route('qa-board.store', $qaThread));
+        $response = $this->actingAs($student)->post(route('qa-board.store'), $qaThread);
 
         $response->assertSessionHasErrors('body');
     }
