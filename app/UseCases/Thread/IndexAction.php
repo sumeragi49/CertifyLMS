@@ -61,6 +61,10 @@ final class IndexAction
         } elseif ($viewer->role === UserRole::Admin) {
             $threads = QaThread::with(['certification.certificates', 'user', 'replies'])
                     -> withCount('replies')
+                    ->when(
+                        $status ?? null,
+                        fn ($q, string $status) => $q->where('status', $status),
+                    )
                     -> keyword($keyword)
                     -> certificationSearch($certification_id)
                     -> orderBy('title')
