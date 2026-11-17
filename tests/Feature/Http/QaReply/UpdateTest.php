@@ -14,7 +14,7 @@ class UpdateTest extends TestCase
     /**
      * A basic feature test example.
      */
-    public function test_student_can_qa_reply_update(): void
+    public function test_student_can_update_qa_reply(): void
     {
         $qaThread =QaThread::factory()->create();
         $qaReply = QaReply::factory()->create([
@@ -35,7 +35,7 @@ class UpdateTest extends TestCase
         ]);
     }
 
-    public function test_other_student_cannot_qa_reply_update(): void
+    public function test_other_student_cannot_update_qa_reply(): void
     {
         $qaThread =QaThread::factory()->create();
         $qaReply = QaReply::factory()->create([
@@ -52,7 +52,7 @@ class UpdateTest extends TestCase
         $response->assertStatus(403);
     }
 
-    public function test_coach_cannot_qa_reply_update(): void
+    public function test_coach_cannot_update_qa_reply(): void
     {
         $qaThread =QaThread::factory()->create();
         $qaReply = QaReply::factory()->create([
@@ -69,7 +69,7 @@ class UpdateTest extends TestCase
         $response->assertStatus(403);
     }
 
-    public function test_admin_cannot_qa_reply_update(): void
+    public function test_admin_cannot_update_qa_reply(): void
     {
         $qaThread =QaThread::factory()->create();
         $qaReply = QaReply::factory()->create([
