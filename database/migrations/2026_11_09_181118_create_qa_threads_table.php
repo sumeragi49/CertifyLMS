@@ -20,7 +20,7 @@ return new class extends Migration
                   ->constrained('certifications')
                   ->restrictOnDelete();
             $table->string('title', 200);
-            $table->text('body');
+            $table->longText('body');
             $table->string('status', 20)->default('unresolved');
             $table->timestamp('resolved_at')->nullable();
             $table->timestamps();
