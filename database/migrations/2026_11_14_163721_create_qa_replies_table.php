@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignUlid('qa_thread_id')
                   ->constrained('qa_threads')
                   ->cascadeOnDelete();
-            $table->longText('body');
+            $table->text('body');
             $table->timestamps();
         });
     }
