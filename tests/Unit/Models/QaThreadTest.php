@@ -27,14 +27,14 @@ class QaThreadTest extends TestCase
         $this->assertTrue($owner->is($user));
     }
 
-    public function test_certification_relation_returns_owner_user(): void
+    public function test_certification_relation_returns_certification(): void
     {
         $certification = Certification::factory()->create();
         $qaThread = QaThread::factory()->for($certification)->create();
 
-        $owner = $qaThread->certification;
+        $selectCertification = $qaThread->certification;
 
-        $this->assertTrue($owner->is($certification));
+        $this->assertTrue($selectCertification->is($certification));
     }
 
     public function test_replies_relation_returns_attached_parts(): void

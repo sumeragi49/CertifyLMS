@@ -25,7 +25,7 @@ class QaReplyTest extends TestCase
         $this->assertTrue($owner->is($user));
     }
 
-    public function test_thread_relation_returns_owner_user(): void
+    public function test_thread_relation_returns_thread(): void
     {
         $qaThread = QaThread::factory()->create();
         $qaReply = QaReply::factory()->create([
