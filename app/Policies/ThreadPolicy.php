@@ -65,30 +65,4 @@ class ThreadPolicy
     {
         return $user->id === $thread->user_id;
     }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Thread $thread): bool
-    {
-        //
-    }
-
-    /*
-    private function canManage(User $student, QaThread $thread): bool
-    {
-        return match ($student->role) {
-            UserRole::Student => true,
-            UserRole::Coach => false,
-            UserRole::Admin => false,
-        };
-    }
-    */
-
-    /*
-    private function createdStudent(User $student, QaThread $thread): bool
-    {
-        return $thread->user()->where('users.id', $student->id)->exists();
-    }
-    */
 }

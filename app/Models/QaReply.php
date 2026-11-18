@@ -27,6 +27,6 @@ class QaReply extends Model
 
     public function thread(): BelongsTo
     {
-        return $this->belongsTo(QaThread::class);
+        return $this->belongsTo(QaThread::class, 'qa_thread_id');
     }
 }
