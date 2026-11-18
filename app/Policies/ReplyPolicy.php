@@ -11,14 +11,6 @@ use Illuminate\Auth\Access\Response;
 class ReplyPolicy
 {
     /**
-     * Determine whether the user can view any models.
-     */
-    public function viewAny(User $user): bool
-    {
-        //
-    }
-
-    /**
      * Determine whether the user can view the model.
      */
     public function view(User $user, QaReply $reply): bool
@@ -48,30 +40,5 @@ class ReplyPolicy
     public function delete(User $user, QaReply $reply): bool
     {
         return $user->id === $reply->user_id || in_array($user->role, [UserRole::Admin], true);
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, QaReply $qaReply): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, QaReply $qaReply): bool
-    {
-        //
-    }
-
-    private function canManage(User $user, QaReply $reply): bool
-    {
-        return match ($user->role) {
-            UserRole::Student => true,
-            UserRole::Coach => true,
-            UserRole::Admin => false,
-        };
     }
 }
