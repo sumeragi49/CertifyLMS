@@ -49,12 +49,9 @@ class MeetingPackPolicy
         return $user->role === UserRole::Admin;
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, MeetingPack $meetingPack): bool
+    public function publish(User $user, MeetingPack $plan): bool
     {
-        //
+        return $user->role === UserRole::Admin;
     }
 
     /**

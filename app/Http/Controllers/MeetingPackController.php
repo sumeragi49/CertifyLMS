@@ -13,6 +13,8 @@ use App\UseCases\MeetingPack\IndexAction;
 use App\UseCases\MeetingPack\StoreAction;
 use App\UseCases\MeetingPack\ShowAction;
 use App\UseCases\MeetingPack\UpdateAction;
+use App\UseCases\MeetingPack\DestroyAction;
+use App\UseCases\MeetingPack\PublishAction;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 
@@ -55,7 +57,7 @@ class MeetingPackController extends Controller
 
         return redirect()
             ->route('admin.meeting-packs.show', $plan)
-            ->with('success', '面談パックを作成しました。');
+            ->with('success', "$plan->name を作成しました。");
     }
 
     /**
@@ -91,14 +93,31 @@ class MeetingPackController extends Controller
 
         return redirect()
             ->route('admin.meeting-packs.update', $plan)
-            ->with('success', '面談パックを更新しました。');
+            ->with('success', "$plan->name へ更新しました。");
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(MeetingPack $plan, DestroyAction $action)
+    public function destroy(MeetingPack $plan, DestroyAction $action): RedirectResponse
     {
-        
+        $this->authorize('delete', $plan);
+
+        $action($plan);
+
+        return redirect()
+            ->route('admin.meeting-packs.index')
+            ->with('success', "$plan->name を削除しました。");
+    }
+
+    public function publish(MeetingPack $plan, PublishAction $action): RedirectResponse
+    {
+        $this->authorize('publish', $plan);
+
+        $action($plan, request()->user());
+
+        return redirect()
+            ->route('admin.meeting-packs.show', $plan)
+            ->with('success', "$plan->name を公開しました。");
     }
 }
