@@ -21,7 +21,6 @@ final class PublishAction
         return DB::transaction(function () use ($plan, $admin) {
             $plan->update([
                 'status' => MeetingPackStatus::Published->value,
-                'published_at' => now(),
                 'updated_by_user_id' => $admin->id,
             ]);
 

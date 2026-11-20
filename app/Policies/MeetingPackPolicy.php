@@ -54,10 +54,12 @@ class MeetingPackPolicy
         return $user->role === UserRole::Admin;
     }
 
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
     public function archive(User $user, MeetingPack $plan): bool
+    {
+        return $user->role === UserRole::Admin;
+    }
+
+    public function unarchive(User $user, MeetingPack $plan): bool
     {
         return $user->role === UserRole::Admin;
     }

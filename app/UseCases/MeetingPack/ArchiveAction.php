@@ -21,7 +21,6 @@ final class ArchiveAction
         return DB::transaction(function () use ($plan, $admin) {
             $plan->update([
                 'status' => MeetingPackStatus::Archived->value,
-                'published_at' => now(),
                 'updated_by_user_id' => $admin->id,
             ]);
 

@@ -16,6 +16,7 @@ use App\UseCases\MeetingPack\UpdateAction;
 use App\UseCases\MeetingPack\DestroyAction;
 use App\UseCases\MeetingPack\PublishAction;
 use App\UseCases\MeetingPack\ArchiveAction;
+use App\UseCases\MeetingPack\UnarchiveAction;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 
@@ -131,5 +132,16 @@ class MeetingPackController extends Controller
         return redirect()
             ->route('admin.meeting-packs.show', $plan)
             ->with('success', "$plan->name をアーカイブにしました。");
+    }
+
+    public function unarchive(MeetingPack $plan, UnarchiveAction $action): RedirectResponse
+    {
+        $this->authorize('unarchive', $plan);
+
+        $action($plan, request()->user());
+
+        return redirect()
+            ->route('admin.meeting-packs.show', $plan)
+            ->with('success', "$plan->name を下書き状態にしました。");
     }
 }
