@@ -8,7 +8,6 @@ use App\Enums\QaThreadStatus;
 use App\Models\QaThread;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 
 final class StoreAction
 {

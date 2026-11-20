@@ -17,6 +17,7 @@ use App\Http\Controllers\EnrollmentManagementController;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\LearningHourTargetController;
 use App\Http\Controllers\MeetingController;
+use App\Http\Controllers\MeetingPackController;
 use App\Http\Controllers\MeetingQuotaHistoryController;
 use App\Http\Controllers\MockExamAnswerController;
 use App\Http\Controllers\MockExamCatalogController;
@@ -223,6 +224,18 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     // リプライの削除
     Route::delete('qa-board/{thread}/replies/{reply}', [QaThreadReplyController::class, 'destroy'])
         ->name('admin.qa-board.replies.destroy');
+
+    //面談パックのマスタ管理
+    Route::get('meeting-packs', [MeetingPackController::class, 'index'])->name('admin.meeting-packs.index');
+    Route::get('meeting-packs/create', [MeetingPackController::class, 'create'])->name('admin.meeting-packs.create');
+    Route::post('/admin/meeting-packs', [MeetingPackController::class, 'store'])->name('admin.meeting-packs.store');
+    Route::get('/admin/meeting-packs/{plan}', [MeetingPackController::class, 'show'])->name('admin.meeting-packs.show');
+    Route::get('/admin/meeting-packs/{plan}/edit', [MeetingPackController::class, 'edit'])->name('admin.meeting-packs.edit');
+    Route::patch('/admin/meeting-packs/{plan}', [MeetingPackController::class, 'update'])->name('admin.meeting-packs.update');
+    Route::delete('/admin/meeting-packs/{plan}', [MeetingPackController::class, 'destroy'])->name('admin.meeting-packs.destroy');
+    Route::post('/admin/meeting-packs/{plan}/publish', [MeetingPackController::class, 'publish'])->name('admin.meeting-packs.publish');
+    Route::post('/admin/meeting-packs/{plan}/archive', [MeetingPackController::class, 'archive'])->name('admin.meeting-packs.archive');
+    Route::post('/admin/meeting-packs/{plan}/unarchive', [MeetingPackController::class, 'unarchive'])->name('admin.meeting-packs.unarchive');
 });
 
 // ============================================================
