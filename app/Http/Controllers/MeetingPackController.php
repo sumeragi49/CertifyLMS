@@ -15,6 +15,7 @@ use App\UseCases\MeetingPack\ShowAction;
 use App\UseCases\MeetingPack\UpdateAction;
 use App\UseCases\MeetingPack\DestroyAction;
 use App\UseCases\MeetingPack\PublishAction;
+use App\UseCases\MeetingPack\ArchiveAction;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 
@@ -119,5 +120,16 @@ class MeetingPackController extends Controller
         return redirect()
             ->route('admin.meeting-packs.show', $plan)
             ->with('success', "$plan->name を公開しました。");
+    }
+
+    public function archive(MeetingPack $plan, ArchiveAction $action): RedirectResponse
+    {
+        $this->authorize('archive', $plan);
+
+        $action($plan, request()->user());
+
+        return redirect()
+            ->route('admin.meeting-packs.show', $plan)
+            ->with('success', "$plan->name をアーカイブにしました。");
     }
 }

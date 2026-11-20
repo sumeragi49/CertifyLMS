@@ -57,8 +57,8 @@ class MeetingPackPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, MeetingPack $meetingPack): bool
+    public function archive(User $user, MeetingPack $plan): bool
     {
-        //
+        return $user->role === UserRole::Admin;
     }
 }

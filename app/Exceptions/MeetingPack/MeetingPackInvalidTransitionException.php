@@ -14,9 +14,9 @@ class MeetingPackInvalidTransitionException extends Exception
         return new self('下書き状態の資格のみ公開できます。');
     }
 
-    public static function forUnpublish(): self
+    public static function forUnArchive(): self
     {
-        return new self('公開中の資格のみ下書き状態に戻せます。');
+        return new self('アーカイブ状態の資格のみ下書き状態に戻せます。');
     }
 
     public static function forArchive(): self
