@@ -8,9 +8,11 @@ use App\Enums\MeetingPackStatus;
 use App\Models\MeetingPack;
 use App\Http\Requests\MeetingPack\IndexRequest;
 use App\Http\Requests\MeetingPack\StoreRequest;
+use App\Http\Requests\MeetingPack\UpdateRequest;
 use App\UseCases\MeetingPack\IndexAction;
 use App\UseCases\MeetingPack\StoreAction;
 use App\UseCases\MeetingPack\ShowAction;
+use App\UseCases\MeetingPack\UpdateAction;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 
@@ -83,16 +85,20 @@ class MeetingPackController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(MeetingPack $plan, UpdateRequest $request, UpdateAction $action): RedirectResponse
     {
-        //
+        $action($plan,$request->validated());
+
+        return redirect()
+            ->route('admin.meeting-packs.update', $plan)
+            ->with('success', '面談パックを更新しました。');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(MeetingPack $plan, DestroyAction $action)
     {
-        //
+        
     }
 }
