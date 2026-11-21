@@ -1,0 +1,62 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Tests\Feature\Http\MeetingPack;
+
+use App\Models\MeetingPack;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
+
+class UnarchiveTest extends TestCase
+{
+    use RefreshDatabase;
+
+    public function test_admin_unarchives_archived_meeting_pack(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $plan = MeetingPack::factory()->archived()->create();
+
+        $response = $this->actingAs($admin)->post(route('admin.meeting-packs.unarchive', $plan));
+
+        $response->assertRedirect(route('admin.meeting-packs.show', $plan));
+        $this->assertSame('draft', $plan->fresh()->status->value);
+        $this->assertDatabaseHas('meeting_packs',[
+            'status' => 'draft',
+        ]);
+    }
+
+    public function test_cannot_unarchived_published(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $plan = MeetingPack::factory()->published()->create();
+
+        $response = $this->actingAs($admin)->post(route('admin.meeting-packs.unarchive', $plan));
+
+        $this->assertDatabaseHas('meeting_packs',[
+            'status' => 'published',
+        ]);
+    }
+
+    public function test_coach_cannot_unarchive(): void
+    {
+        $coach = User::factory()->coach()->create();
+        $plan = MeetingPack::factory()->archived()->create();
+
+        $response = $this->actingAs($coach)->post(route('admin.meeting-packs.unarchive', $plan));
+
+        $response->assertForbidden();
+    }
+
+    public function test_student_cannot_unarchive(): void
+    {
+        $student = User::factory()->student()->create();
+        $plan = MeetingPack::factory()->archived()->create();
+
+        $response = $this->actingAs($student)->post(route('admin.meeting-packs.unarchive', $plan));
+
+        $response->assertForbidden();
+    }
+}
