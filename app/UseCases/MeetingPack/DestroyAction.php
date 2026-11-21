@@ -14,7 +14,7 @@ final class DestroyAction
     public function __invoke(MeetingPack $plan): void
     {
         if ($plan->status === MeetingPackStatus::Published) {
-            throw MeetingPackNotDeletableException::forArchive();
+            throw new MeetingPackNotDeletableException;
         }
 
         DB::transaction(fn () => $plan->delete());

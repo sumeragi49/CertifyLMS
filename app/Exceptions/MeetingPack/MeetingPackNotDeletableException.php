@@ -11,6 +11,6 @@ class MeetingPackNotDeletableException extends Exception
 {
     public function __construct(?\Throwable $previous = null)
     {
-        parent::__construct('公開中状態の面談パックは削除できません。', $previous);
+        parent::__construct('公開中状態の面談パックは削除できません。', $previous, 409);
     }
 }
