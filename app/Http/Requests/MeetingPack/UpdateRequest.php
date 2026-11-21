@@ -25,8 +25,8 @@ class UpdateRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:100'],
             'description' => ['nullable', 'string', 'max:2000'],
-            'meeting_count' => ['required', 'integer', 'digits_between:1,100'],
-            'price' => ['required', 'integer', 'digits_between:0,1000000'],
+            'meeting_count' => ['required', 'integer', 'between:1,100'],
+            'price' => ['required', 'integer', 'between:0,1000000'],
             'stripe_price_id' => ['nullable', 'string', 'max:255'],
             'sort_order' => ['required','integer', 'min:0'],
         ];
