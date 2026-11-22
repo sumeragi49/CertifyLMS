@@ -92,4 +92,13 @@ class Plan extends Model
     {
         return $query->orderBy('sort_order')->orderByDesc('created_at');
     }
+
+    public function scopeKeyword(Builder $query, ?string $keyword): Builder
+    {
+        if ($keyword === null || $keyword === '') {
+            return $query;
+        }
+
+        return $query->where('name', 'LIKE', '%'.$keyword.'%');
+    }
 }
