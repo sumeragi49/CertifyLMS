@@ -30,7 +30,7 @@ class PlanPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->role === UserRole::Admin;
     }
 
     /**

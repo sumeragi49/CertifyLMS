@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Plan;
 
+use App\Enums\PlanStatus;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRequest extends FormRequest
@@ -11,7 +12,7 @@ class StoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->user()?->can('create', Plan::class) ?? false;
     }
 
     /**
@@ -22,7 +23,22 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'string', 'max:100'],
+            'description' => ['nullable', 'string', 'max:2000'],
+            'duration_days' => ['required', 'integer', 'between:1,3650'],
+            'default_meeting_quota' => ['required', 'integer', 'between:0,1000'],
+            'sort_order' => ['required','integer', 'min:0'],
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'name' => 'プラン名',
+            'description' => '説明',
+            'duration_days' => '受講期間',
+            'default_meeting_quota' => '初回付与面談回数',
+            'sort_order' => '数値',
         ];
     }
 }

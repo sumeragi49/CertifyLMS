@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Plan\IndexRequest;
+use App\Http\Requests\Plan\StoreRequest;
 use App\Models\Plan;
 use App\Policies\PlanPolicy;
 use App\UseCases\Plan\IndexAction;
+use App\UseCases\Plan\StoreAction;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -33,17 +35,23 @@ class PlanController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
-        //
+        $this->authorize('create', Plan::class);
+
+        return view('plan.management.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request, StoreAction $action): RedirectResponse
     {
-        //
+        $plan = $action($request->user(), $request->validated());
+
+        return redirect()
+            -> route('admin.plans.show',$plan)
+            -> with('success', "$plan->name を作成しました。");
     }
 
     /**
