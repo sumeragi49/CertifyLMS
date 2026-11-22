@@ -57,9 +57,13 @@ class PlanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Plan $plan): View
     {
-        //
+        $this->authorize('view', $plan);
+
+        return view('plan.management.show', [
+            'plan' => $plan,
+        ]);
     }
 
     /**
