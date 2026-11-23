@@ -11,6 +11,7 @@ use App\UseCases\Plan\IndexAction;
 use App\UseCases\Plan\StoreAction;
 use App\UseCases\Plan\UpdateAction;
 use App\UseCases\Plan\DestroyAction;
+use App\UseCases\Plan\PublishAction;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -110,6 +111,23 @@ class PlanController extends Controller
             return redirect()
                 ->route('admin.plans.index')
                 ->with('error', "$plan->name を削除できません。");
+        }
+    }
+
+    public function publish(Plan $plan, PublishAction $action): RedirectResponse
+    {
+        $this->authorize('publish', $plan);
+
+        try{
+            $action($plan, request()->user());
+
+            return redirect()
+                ->route('admin.plans.show', $plan)
+                ->with('success', "$plan->name を公開しました。");
+        } catch (Exception $e){
+            return redirect()
+                ->route('admin.plans.index')
+                ->with('error', "$plan->name の状態を変更できません。");
         }
     }
 }

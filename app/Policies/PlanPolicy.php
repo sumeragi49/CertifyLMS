@@ -52,9 +52,9 @@ class PlanPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Plan $plan): bool
+    public function publish(User $user): bool
     {
-        //
+        return $user->role === UserRole::Admin;
     }
 
     /**
