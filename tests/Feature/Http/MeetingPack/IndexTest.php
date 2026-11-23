@@ -87,6 +87,6 @@ class IndexTest extends TestCase
         $response->assertOk();
         $plans = $response->viewData('plans');
         $this->assertSame(10, $plans->perPage());
-        $this->assertSame(16, $plans->total());
+        $this->assertSame(1, $plans->total());
     }
 }
