@@ -27,7 +27,7 @@ class StoreTest extends TestCase
             'meeting_count' => 12,
             'price' => 150000,
             'stripe_price_id' => null,
-            'status' => 'published',
+            'status' => 'draft',
             'sort_order' => 12,
         ], $override);
     }
