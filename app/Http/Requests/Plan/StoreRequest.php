@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Plan;
 
-use App\Enums\PlanStatus;
+use App\Models\Plan;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRequest extends FormRequest

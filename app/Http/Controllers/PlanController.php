@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Plan\IndexRequest;
 use App\Http\Requests\Plan\StoreRequest;
+use App\Http\Requests\Plan\UpdateRequest;
 use App\Models\Plan;
 use App\Policies\PlanPolicy;
 use App\UseCases\Plan\IndexAction;
 use App\UseCases\Plan\StoreAction;
+use App\UseCases\Plan\UpdateAction;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -81,9 +83,13 @@ class PlanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Plan $plan, UpdateRequest $request, UpdateAction $action): RedirectResponse
     {
-        //
+        $action($plan,$request->validated());
+
+        return redirect()
+            ->route('admin.plans.update', $plan)
+            ->with('success', "$plan->name へ更新しました。");
     }
 
     /**
