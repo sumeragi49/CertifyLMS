@@ -31,7 +31,7 @@ class UpdateRequestTest extends TestCase
             'updated_by_user_id' => $admin->id,
         ];
 
-        $response = $this->actingAs($admin)->post(route('admin.meeting-packs.store', $plan), $updatePlan);
+        $response = $this->actingAs($admin)->patch(route('admin.meeting-packs.update', $plan), $updatePlan);
 
         $response->assertSessionDoesntHaveErrors();
         $response->assertStatus(302);
@@ -48,7 +48,7 @@ class UpdateRequestTest extends TestCase
             'name' => 'Sample Cert',
         ], $overrides);
 
-        $response = $this->actingAs($admin)->postJson(route('admin.meeting-packs.store', $plan), $updatePlan);
+        $response = $this->actingAs($admin)->patchJson(route('admin.meeting-packs.update', $plan), $updatePlan);
 
         $response->assertStatus(422);
         $response->assertJsonValidationErrors($expectedErrorField);
@@ -59,7 +59,7 @@ class UpdateRequestTest extends TestCase
         $coach = User::factory()->coach()->create();
         $plan = MeetingPack::factory()->create();
 
-        $response = $this->actingAs($coach)->postJson(route('admin.meeting-packs.store',$plan), [
+        $response = $this->actingAs($coach)->patchJson(route('admin.meeting-packs.update',$plan), [
             'name' => 'Sample',
         ]);
 
@@ -71,7 +71,7 @@ class UpdateRequestTest extends TestCase
         $student = User::factory()->student()->create();
         $plan = MeetingPack::factory()->create();
 
-        $response = $this->actingAs($student)->postJson(route('admin.meeting-packs.store', $plan), [
+        $response = $this->actingAs($student)->patchJson(route('admin.meeting-packs.update', $plan), [
             'name' => 'Sample',
         ]);
 
