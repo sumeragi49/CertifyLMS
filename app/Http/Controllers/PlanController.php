@@ -13,6 +13,7 @@ use App\UseCases\Plan\UpdateAction;
 use App\UseCases\Plan\DestroyAction;
 use App\UseCases\Plan\PublishAction;
 use App\UseCases\Plan\ArchiveAction;
+use App\UseCases\Plan\UnarchiveAction;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -143,6 +144,23 @@ class PlanController extends Controller
                 ->route('admin.plans.show', $plan)
                 ->with('success', "$plan->name をアーカイブにしました。");
         } catch (Exception $e){
+            return redirect()
+                ->route('admin.plans.index')
+                ->with('error', "$plan->name の状態を変更できません。");
+        }
+    }
+
+    public function unarchive(plan $plan, UnarchiveAction $action): RedirectResponse
+    {
+        $this->authorize('unarchive', $plan);
+
+        try{
+            $action($plan, request()->user());
+
+            return redirect()
+                ->route('admin.plans.show', $plan)
+                ->with('success', "$plan->name を下書き状態にしました。");
+        } catch(Exception $e) {
             return redirect()
                 ->route('admin.plans.index')
                 ->with('error', "$plan->name の状態を変更できません。");

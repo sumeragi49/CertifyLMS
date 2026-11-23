@@ -59,11 +59,8 @@ class PlanPolicy
         return $user->role === UserRole::Admin;
     }
 
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Plan $plan): bool
+    public function unarchive(User $user): bool
     {
-        //
+        return $user->role === UserRole::Admin;
     }
 }
