@@ -10,6 +10,7 @@ use App\Policies\PlanPolicy;
 use App\UseCases\Plan\IndexAction;
 use App\UseCases\Plan\StoreAction;
 use App\UseCases\Plan\UpdateAction;
+use App\UseCases\Plan\DestroyAction;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -95,8 +96,20 @@ class PlanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Plan $plan, DestroyAction $action): RedirectResponse
     {
-        //
+        $this->authorize('delete', $plan);
+
+        try {
+            $action($plan);
+
+            return redirect()
+                ->route('admin.plans.index')
+                ->with('success', "$plan->name を削除しました。");
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('admin.plans.index')
+                ->with('error', "$plan->name を削除できません。");
+        }
     }
 }
