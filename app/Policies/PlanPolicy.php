@@ -49,10 +49,12 @@ class PlanPolicy
         return $user->role === UserRole::Admin;
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     */
     public function publish(User $user): bool
+    {
+        return $user->role === UserRole::Admin;
+    }
+
+    public function archive(User $user): bool
     {
         return $user->role === UserRole::Admin;
     }

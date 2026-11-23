@@ -12,6 +12,7 @@ use App\UseCases\Plan\StoreAction;
 use App\UseCases\Plan\UpdateAction;
 use App\UseCases\Plan\DestroyAction;
 use App\UseCases\Plan\PublishAction;
+use App\UseCases\Plan\ArchiveAction;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -130,4 +131,23 @@ class PlanController extends Controller
                 ->with('error', "$plan->name の状態を変更できません。");
         }
     }
+
+    public function archive(Plan $plan, ArchiveAction $action): RedirectResponse
+    {
+        $this->authorize('archive', $plan);
+
+        try{
+            $action($plan, request()->user());
+
+            return redirect()
+                ->route('admin.plans.show', $plan)
+                ->with('success', "$plan->name をアーカイブにしました。");
+        } catch (Exception $e){
+            return redirect()
+                ->route('admin.plans.index')
+                ->with('error', "$plan->name の状態を変更できません。");
+        }
+    }
 }
+
+

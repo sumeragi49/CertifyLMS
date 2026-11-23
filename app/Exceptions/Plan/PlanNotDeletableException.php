@@ -10,7 +10,7 @@ use Exception;
 class PlanNotDeletableException extends Exception
 {
     public function __construct(
-        string $message = '公開中状態のプランは削除できません。',
+        string $message = '削除できるのは下書き状態かつ受講者数が0のプランです',
         ?\Throwable $previous = null
     ) {
         parent::__construct($message, 409, $previous);

@@ -13,7 +13,9 @@ final class DestroyAction
 {
     public function __invoke(Plan $plan): void
     {
-        if ($plan->status === PlanStatus::Published) {
+        $countStudents = $plan->users_count();
+
+        if ($plan->status !== PlanStatus::Draft && $countStudents > 0) {
             throw new PlanNotDeletableException;
         }
 
