@@ -14,7 +14,7 @@ class UnarchiveTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_admin_unarchives_archived_meeting_pack(): void
+    public function test_admin_unarchives_archived_plan(): void
     {
         $admin = User::factory()->admin()->create();
         $plan = Plan::factory()->archived()->create();
@@ -28,7 +28,7 @@ class UnarchiveTest extends TestCase
         ]);
     }
 
-    public function test_cannot_unarchived_published(): void
+    public function test_cannot_unarchived_published_plan(): void
     {
         $admin = User::factory()->admin()->create();
         $plan = Plan::factory()->published()->create();

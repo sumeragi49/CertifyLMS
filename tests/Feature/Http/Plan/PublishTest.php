@@ -28,7 +28,7 @@ class PublishTest extends TestCase
         ]);
     }
 
-    public function test_cannot_publish_archived(): void
+    public function test_cannot_publish_archived_plan(): void
     {
         $admin = User::factory()->admin()->create();
         $plan = Plan::factory()->archived()->create();

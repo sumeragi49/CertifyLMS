@@ -41,7 +41,7 @@ class DestroyTest extends TestCase
         ]);
     }
 
-    public function test_admin_can_delete_archive_plan(): void
+    public function test_admin_cannot_delete_archive_plan(): void
     {
         $admin = User::factory()->admin()->create();
         $plan = Plan::factory()->archived()->create();
@@ -54,7 +54,7 @@ class DestroyTest extends TestCase
         ]);
     }
 
-    public function test_admin_can_delete_draft_binding_user_plan(): void
+    public function test_admin_cannot_delete_draft_binding_user_plan(): void
     {
         $admin = User::factory()->admin()->create();
         $plan = Plan::factory()->draft()->create();

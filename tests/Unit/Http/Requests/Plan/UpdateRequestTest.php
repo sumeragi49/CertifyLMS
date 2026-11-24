@@ -15,7 +15,7 @@ class UpdateRequestTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_validation_passes_with_valid_meeting_pack(): void
+    public function test_validation_passes_with_valid_plan(): void
     {
         $admin = User::factory()->admin()->create();
         $plan = Plan::factory()->create();

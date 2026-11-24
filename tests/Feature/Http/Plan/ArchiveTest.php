@@ -28,7 +28,7 @@ class ArchiveTest extends TestCase
         ]);
     }
 
-    public function test_cannot_draft_archived(): void
+    public function test_cannot_archived_draft_plan(): void
     {
         $admin = User::factory()->admin()->create();
         $plan = Plan::factory()->draft()->create();
