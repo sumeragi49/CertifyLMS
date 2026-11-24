@@ -155,4 +155,19 @@ class PlanTest extends TestCase
         $this->assertSame(6, $fresh->default_meeting_quota);
         $this->assertSame(10, $fresh->sort_order);
     }
+
+    public function test_scope_keyword_filters_by_body_match(): void
+    {
+        $target = Plan::factory()->create([
+            'name' => '4ヶ月プラン16回',
+        ]);
+        Plan::factory()->create([
+            'name' => '9ヵ月プラン36回',
+        ]);
+
+        $results = Plan::keyword('4ヶ月プラン16回')->get();
+
+        $this->assertCount(1, $results, 'キーワード 4ヶ月プラン16回 を含む Plan のみが抽出されるはず');
+        $this->assertTrue($results->first()->is($target));
+    }
 }

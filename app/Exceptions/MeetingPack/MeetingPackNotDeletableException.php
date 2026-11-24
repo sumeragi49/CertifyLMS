@@ -9,8 +9,10 @@ use Exception;
 
 class MeetingPackNotDeletableException extends Exception
 {
-    public function __construct(?\Throwable $previous = null)
-    {
-        parent::__construct('公開中状態の面談パックは削除できません。', $previous, 409);
+    public function __construct(
+        string $message = '公開中状態の面談パックは削除できません。',
+        ?\Throwable $previous = null
+    ) {
+        parent::__construct($message, 409, $previous);
     }
 }

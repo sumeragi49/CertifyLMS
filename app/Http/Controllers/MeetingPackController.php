@@ -65,7 +65,7 @@ class MeetingPackController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(MeetingPack $plan, ShowAction $action): View
+    public function show(MeetingPack $plan): View
     {
         $this->authorize('view', $plan);
 
