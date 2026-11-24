@@ -14,7 +14,7 @@ class ArchiveTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_admin_archives_published_meeting_pack(): void
+    public function test_admin_archives_published_plan(): void
     {
         $admin = User::factory()->admin()->create();
         $plan = Plan::factory()->published()->create();
