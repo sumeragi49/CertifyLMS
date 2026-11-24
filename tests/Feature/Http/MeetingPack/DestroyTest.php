@@ -28,8 +28,6 @@ class DestroyTest extends TestCase
 
     public function test_cannot_delete_published_meeting_pack(): void
     {
-        //$this->withoutExceptionHandling();
-
         $admin = User::factory()->admin()->create();
         $plan = MeetingPack::factory()->published()->create();
 
