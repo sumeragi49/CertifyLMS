@@ -25,6 +25,7 @@ use App\Http\Controllers\MockExamController;
 use App\Http\Controllers\MockExamQuestionController;
 use App\Http\Controllers\MockExamSessionController;
 use App\Http\Controllers\MockExamSessionMonitorController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PartController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\QaThreadController;
@@ -545,6 +546,17 @@ Route::middleware(['auth', 'role:student,coach', 'active-learning'])->group(func
         ->name('qa-board.replies.destroy');
 });
 
+// ============================================================
+// 受講生・コーチ共有 — 通知機能(一覧、既読、まとめて既読)
+// ============================================================
+Route::middleware(['auth', 'role:student,coach', 'active-learning'])->group(function () {
+    Route::get('notifications', [NotificationController::class, 'index'])
+        ->name('notifications.index');
+    Route::post('/notifications/{notification}/read', [NotificationController::class, 'read'])
+        ->name('notifications.markAsRead');
+    Route::post('/notifications/read-all', [NotificationController::class, 'readAll'])
+        ->name('notifications.markAllAsRead');
+});
 // ============================================================
 // 開発専用: 共通コンポーネントショーケース(APP_ENV=local のみ表示)
 // ============================================================

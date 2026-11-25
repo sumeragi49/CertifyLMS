@@ -18,6 +18,7 @@ use App\Models\MeetingPack;
 use App\Models\MockExam;
 use App\Models\MockExamQuestion;
 use App\Models\MockExamSession;
+use App\Models\InfoNotification;
 use App\Models\Part;
 use App\Models\Plan;
 use App\Models\QaThread;
@@ -46,6 +47,7 @@ use App\Policies\MeetingQuotaPolicy;
 use App\Policies\MockExamPolicy;
 use App\Policies\MockExamQuestionPolicy;
 use App\Policies\MockExamSessionPolicy;
+use App\Policies\NotificationPolicy;
 use App\Policies\PartPolicy;
 use App\Policies\PartViewPolicy;
 use App\Policies\PlanPolicy;
@@ -99,6 +101,7 @@ class AuthServiceProvider extends ServiceProvider
         CoachAvailability::class => CoachAvailabilityPolicy::class,
         QaThread::class => ThreadPolicy::class,
         QaReply::class => ReplyPolicy::class,
+        InfoNotification::class => NotificationPolicy::class,
     ];
 
     /**
