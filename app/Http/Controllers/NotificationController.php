@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Notification\IndexRequest;
+use App\Models\User;
 use App\Models\InfoNotification;
 use App\UseCases\Notification\IndexAction;
+use App\UseCases\Notification\ReadAction;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -27,5 +29,16 @@ class NotificationController extends Controller
             'tabs' => $result['tabs'],
             'tab' => $validated['tab'] ?? 'all',
         ]);
+    }
+
+    public function read(User $user, InfoNotification $notification, ReadAction $action): RedirectResponse
+    {
+        $this->authorize('read', $notification);
+
+        $action($notification);
+
+        return redirect()
+            -> route('notifications.index')
+            -> with('success', "一つの通知を既読状態にしました。");
     }
 }

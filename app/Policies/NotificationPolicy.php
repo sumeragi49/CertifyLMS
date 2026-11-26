@@ -12,4 +12,9 @@ class NotificationPolicy
     {
         return in_array($user->role, [UserRole::Student, UserRole::Coach], true);
     }
+
+    public function read(User $user, InfoNotification $notification): bool
+    {
+        return $user->id === $notification->notifiable_id;
+    }
 }
