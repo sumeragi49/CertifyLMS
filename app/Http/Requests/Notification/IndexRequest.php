@@ -23,6 +23,7 @@ class IndexRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'tab' => ['nullable', 'string', 'in:all,unread'],
             'page' => ['nullable', 'integer', 'min:1'],
         ];
     }

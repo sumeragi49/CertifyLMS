@@ -38,6 +38,7 @@ class NotificationSeeder extends Seeder
             'notifiable_type' => 'App\Models\User',
             'notifiable_id' => $student->id,
             'data' => '{"notification_type":"qa_reply_received","title":"質問の返信","message":"質問の返答が届きました。"}',
+            'read_at' => now(),
             'created_at' => now(),
         ];
         DB::table('notifications')->insert($param);

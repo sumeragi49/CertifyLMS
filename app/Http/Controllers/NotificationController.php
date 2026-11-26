@@ -19,13 +19,13 @@ class NotificationController extends Controller
 
         $result = $action($request->user(), $validated);
 
-        $tab = implode($result['tabs']);
+        $validated['tab'] = $request->input('tab');
 
         return view('notifications.index', [
             'notifications' => $result['notifications'],
             'unreadCount' => $result['unreadCount'],
             'tabs' => $result['tabs'],
-            'tab' => $tab,
+            'tab' => $validated['tab'] ?? 'all',
         ]);
     }
 }

@@ -13,11 +13,20 @@ final class IndexAction
     /**
      * @return Collection<int, CertificationCategory>
      */
-    public function __invoke(User $user, array $filters = []): array
+    public function __invoke(User $user, array $tabs = []): array
     {
-        $notifications = InfoNotification::query()
+        $tab = $tabs['tab'] ?? null;
+
+        if ($tab === 'unread') {
+            $notifications = InfoNotification::query()
+               ->where('notifiable_id',$user->id)
+               ->where('read_at', null)
+               ->paginate(10);
+        } else {
+            $notifications = InfoNotification::query()
                ->where('notifiable_id',$user->id)
                ->paginate(10);
+        }
 
         $unreadCount = InfoNotification::query()
                      -> where('notifiable_id',$user->id)
