@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\InfoNotification;
 use App\UseCases\Notification\IndexAction;
 use App\UseCases\Notification\ReadAction;
+use App\UseCases\Notification\ReadAllAction;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -40,5 +41,16 @@ class NotificationController extends Controller
         return redirect()
             -> route('notifications.index')
             -> with('success', "一つの通知を既読状態にしました。");
+    }
+
+    public function readAll(User $user, InfoNotification $notifications, ReadAllAction $action): RedirectResponse
+    {
+        $this->authorize('allRead', InfoNotification::class);
+
+        $action($notifications);
+
+        return redirect()
+            -> route('notifications.index')
+            -> with('success', "未読の全ての通知を既読状態にしました。");
     }
 }
