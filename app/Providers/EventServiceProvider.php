@@ -6,8 +6,10 @@ namespace App\Providers;
 
 use App\Events\CertificationCoachAttached;
 use App\Events\CertificationCoachDetached;
+use App\Events\ChatMessageSent;
 use App\Listeners\SyncChatMembersOnCoachAssignmentChanged;
 use App\Listeners\UpdateLastLoginAt;
+use App\Listeners\SendChatNotification;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -34,6 +36,9 @@ class EventServiceProvider extends ServiceProvider
         CertificationCoachDetached::class => [
             SyncChatMembersOnCoachAssignmentChanged::class,
         ],
+        ChatMessageSent::class => [
+            SendChatNotification::class,
+        ]
     ];
 
     /**

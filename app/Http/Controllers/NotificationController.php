@@ -38,8 +38,7 @@ class NotificationController extends Controller
 
         $action($notification);
 
-        return redirect()
-            -> route('notifications.index')
+        return redirect($notification->data['url'] ?? route('notifications.index'))
             -> with('success', "一つの通知を既読状態にしました。");
     }
 
