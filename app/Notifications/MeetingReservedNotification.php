@@ -43,7 +43,7 @@ class MeetingReservedNotification extends Notification
         } elseif ($notification->role === 'coach') {
             $url = route('coach.meetings.index');
         } else {
-            $url = route('dashboard.index')
+            $url = route('dashboard.index');
         }
 
         return (new MailMessage)
@@ -65,7 +65,7 @@ class MeetingReservedNotification extends Notification
         } elseif ($notification->role === 'coach') {
             $url = route('coach.meetings.index');
         } else {
-            $url = route('dashboard.index')
+            $url = route('dashboard.index');
         }
 
         return [

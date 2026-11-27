@@ -27,4 +27,13 @@ class QaReplyReserved
      *
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
+    public function broadcastOn(): PrivateChannel
+    {
+        return new PrivateChannel("qa-thread.index");
+    }
+
+    public function broadcastAs(): string
+    {
+        return 'ReplyReserved';
+    }
 }

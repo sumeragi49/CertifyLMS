@@ -27,4 +27,13 @@ class MeetingReserved
      *
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
+    public function broadcastOn(): PrivateChannel
+    {
+        return new PrivateChannel("meeting.index");
+    }
+
+    public function broadcastAs(): string
+    {
+        return 'MeetingReserved';
+    }
 }
