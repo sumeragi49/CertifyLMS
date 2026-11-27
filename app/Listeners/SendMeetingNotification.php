@@ -22,8 +22,12 @@ class SendMeetingNotification
      */
     public function handle(MeetingReserved $event): void
     {
-        $recipient = $event->meeting->student;
+        $studentRecipient = $event->meeting->student;
 
-        $recipient->notify(new MeetingReservedNotification($event->meeting));
+        $studentRecipient->notify(new MeetingReservedNotification($event->meeting));
+
+        $coachRecipient = $event->meeting->coach;
+
+        $coachRecipient->notify(new MeetingReservedNotification($event->meeting));
     }
 }

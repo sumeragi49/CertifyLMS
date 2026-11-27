@@ -27,13 +27,4 @@ class QaReplyReserved
      *
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
-    public function broadcastOn(): PrivateChannel
-    {
-        return new PrivateChannel("qa-board/{$this->reply->thread_id}");
-    }
-
-    public function broadcastAs(): string
-    {
-        return 'QaReplyReserved';
-    }
 }

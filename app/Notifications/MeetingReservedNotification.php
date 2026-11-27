@@ -2,6 +2,8 @@
 
 namespace App\Notifications;
 
+use App\Enums\UserRole;
+use App\Models\User;
 use App\Models\Meeting;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -36,10 +38,16 @@ class MeetingReservedNotification extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
+        if ($notifiable->role === 'student') {
+            $url = route('meetings.index');
+        } else {
+            $url = route('coach.meetings.index');
+        }
+
         return (new MailMessage)
                     ->greeting('こんにちは！')
                     ->line('面談の予約が確定しました。')
-                    ->action('面談予約の確認', route('meetings.index'))
+                    ->action('面談予約の確認', $url)
                     ->line('ご確認ください。');
     }
 
@@ -50,11 +58,17 @@ class MeetingReservedNotification extends Notification
      */
     public function toArray(object $notifiable): array
     {
+        if ($notifiable->role === 'student') {
+            $url = route('meetings.index');
+        } else {
+            $url = route('coach.meetings.index');
+        }
+
         return [
             'notification_type' => 'meeting_received',
             'title' => '面談予約の確定',
             'message' => '面談の日付が確定しました。確認してください。',
-            'url' => route('meetings.index')
+            'url' => $url,
         ];
     }
 }

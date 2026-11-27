@@ -27,10 +27,4 @@ class MeetingReserved
      *
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
-    /*
-    public function broadcastOn(): PrivateChannel
-    {
-        return return new PrivateChannel("meetings");;
-    }
-    */
 }

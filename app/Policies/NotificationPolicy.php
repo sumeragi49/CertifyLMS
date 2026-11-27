@@ -10,7 +10,7 @@ class NotificationPolicy
 {
     public function viewAny(User $user): bool
     {
-        return in_array($user->role, [UserRole::Student, UserRole::Coach], true);
+        return true;
     }
 
     public function read(User $user, InfoNotification $notification): bool
@@ -20,6 +20,6 @@ class NotificationPolicy
 
     public function allRead(User $user): bool
     {
-        return in_array($user->role, [UserRole::Student, UserRole::Coach], true);
+        return true;
     }
 }
