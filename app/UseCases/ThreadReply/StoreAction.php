@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\UseCases\ThreadReply;
 
+use App\Events\QaReplyReserved;
 use App\Enums\QaThreadStatus;
 use App\Models\QaThread;
 use App\Models\QaReply;
@@ -21,6 +22,10 @@ final class StoreAction
                 'qa_thread_id' => $thread->id,
                 'body' => $validated['body'],
             ]);
+
+            DB::afterCommit(function () use ($reply): void {
+                broadcast(new QaReplyReserved($reply->load('user')))->toOthers();
+            });
 
             return $reply;
         });

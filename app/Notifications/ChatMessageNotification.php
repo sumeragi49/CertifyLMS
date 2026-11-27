@@ -39,7 +39,7 @@ class ChatMessageNotification extends Notification
         return (new MailMessage)
                     ->greeting('こんにちは！')
                     ->line('チャットのメッセージを受け付けました。')
-                    ->action('通知の確認', url('/notifications'))
+                    ->action('通知の確認', route('chat.index'))
                     ->line('ご確認ください。');
     }
 

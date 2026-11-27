@@ -4,14 +4,7 @@ namespace App\Listeners;
 
 use App\Events\ChatMessageSent;
 use App\Models\User;
-use App\Models\InfoNotification;
 use App\Notifications\ChatMessageNotification;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Notifications\DatabaseNotification;
-use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
 
 class SendChatNotification
 {
