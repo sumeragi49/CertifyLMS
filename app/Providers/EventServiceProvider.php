@@ -8,10 +8,12 @@ use App\Events\CertificationCoachAttached;
 use App\Events\CertificationCoachDetached;
 use App\Events\ChatMessageSent;
 use App\Events\QaReplyReserved;
+use App\Events\MeetingReserved;
 use App\Listeners\SyncChatMembersOnCoachAssignmentChanged;
 use App\Listeners\UpdateLastLoginAt;
 use App\Listeners\SendChatNotification;
 use App\Listeners\SendQaReplyNotification;
+use App\Listeners\SendMeetingNotification;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -43,6 +45,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         QaReplyReserved::class => [
             SendQaReplyNotification::class,
+        ],
+        MeetingReserved::class => [
+            SendMeetingNotification::class,
         ],
     ];
 
