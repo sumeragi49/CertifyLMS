@@ -18,8 +18,9 @@ class MeetingReservedNotification extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct(private Meeting $meeting)
-    {
+    public function __construct(
+        private Meeting $meeting
+    ){
         $this->id = (string) Str::ulid();
     }
 
@@ -38,12 +39,14 @@ class MeetingReservedNotification extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
-        if ($notifiable->role === 'student') {
+        $role = $notifiable->role instanceof \BackedEnum
+            ? $notifiable->role->value
+            : $notifiable->role;
+
+        if ($role === 'student') {
             $url = route('meetings.index');
-        } elseif ($notifiable->role === 'coach') {
-            $url = route('coach.meetings.index');
         } else {
-            $url = route('dashboard.index');
+            $url = route('coach.meetings.index');
         }
 
         return (new MailMessage)
@@ -60,12 +63,14 @@ class MeetingReservedNotification extends Notification
      */
     public function toArray(object $notifiable): array
     {
-        if ($notifiable->role === 'student') {
+        $role = $notifiable->role instanceof \BackedEnum
+            ? $notifiable->role->value
+            : $notifiable->role;
+
+        if ($role === 'student') {
             $url = route('meetings.index');
-        } elseif ($notifiable->role === 'coach') {
-            $url = route('coach.meetings.index');
         } else {
-            $url = route('dashboard.index');
+            $url = route('coach.meetings.index');
         }
 
         return [
