@@ -8,6 +8,7 @@ use App\Enums\EnrollmentStatus;
 use App\Enums\UserRole;
 use App\Enums\UserStatus;
 use App\Notifications\Auth\ResetPasswordNotification;
+use App\Notifications\ChatMessageNotification;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -309,5 +310,10 @@ class User extends Authenticatable
     public function scopeActive(Builder $query): Builder
     {
         return $query->whereIn('status', [UserStatus::InProgress, UserStatus::Graduated]);
+    }
+
+    public function threads(): HasMany
+    {
+        return $this->hasMany(QaThread::class);
     }
 }

@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Policies;
+
+use App\Enums\UserRole;
+use App\Models\User;
+use App\Models\InfoNotification;
+
+class NotificationPolicy
+{
+    public function viewAny(User $user): bool
+    {
+        return true;
+    }
+
+    public function read(User $user, InfoNotification $notification): bool
+    {
+        return $user->id === $notification->notifiable_id;
+    }
+
+    public function allRead(User $user): bool
+    {
+        return true;
+    }
+}
