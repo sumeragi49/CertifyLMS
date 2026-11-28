@@ -40,7 +40,7 @@ class MeetingReservedNotification extends Notification
     {
         if ($notifiable->role === 'student') {
             $url = route('meetings.index');
-        } elseif ($notification->role === 'coach') {
+        } elseif ($notifiable->role === 'coach') {
             $url = route('coach.meetings.index');
         } else {
             $url = route('dashboard.index');
@@ -62,7 +62,7 @@ class MeetingReservedNotification extends Notification
     {
         if ($notifiable->role === 'student') {
             $url = route('meetings.index');
-        } elseif ($notification->role === 'coach') {
+        } elseif ($notifiable->role === 'coach') {
             $url = route('coach.meetings.index');
         } else {
             $url = route('dashboard.index');
