@@ -2,7 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Uesr;
+use App\Models\User;
+use App\Models\InfoNotification;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Str;
@@ -12,6 +13,7 @@ use Illuminate\Support\Str;
  */
 class NotificationFactory extends Factory
 {
+    protected $model = InfoNotification::class;
     /**
      * Define the model's default state.
      *
@@ -27,7 +29,7 @@ class NotificationFactory extends Factory
             'meeting_canceled',
             'meeting_reminder',
             'admin_announcement',
-            default,
+            'default',
         ]);
 
         $title = match ($notificationType) {
@@ -38,7 +40,7 @@ class NotificationFactory extends Factory
             'meeting_canceled' => '面談のキャンセル',
             'meeting_reminder' => '面談の時間',
             'admin_announcement' => '運営の通知',
-            default => '通知',
+            'default' => '通知',
         };
 
         $message = match ($notificationType) {
@@ -49,7 +51,7 @@ class NotificationFactory extends Factory
             'meeting_canceled' => '面談がキャンセルされました。',
             'meeting_reminder' => 'まもなく予約した面談の時間です。',
             'admin_announcement' => '運営からのお知らせがあります。',
-            default  => '新しい通知があります。',
+            'default'  => '新しい通知があります。',
         };
 
         return [
