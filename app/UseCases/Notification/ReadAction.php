@@ -14,12 +14,14 @@ final class ReadAction
     public function __invoke(InfoNotification $notification): InfoNotification
     {
         return DB::transaction(function () use ($notification) {
-            
-            if (!empty($notification->read_at)) {
+
+            if (!is_null($notification->read_at)) {
                 abort(400, 'この通知はすでに既読になっています。');
             }
 
-            $notification->markAsRead();
+            $notification->update([
+                'read_at' => now()
+            ]);;
 
             return $notification->fresh();
         });
