@@ -21,6 +21,10 @@ final class ReadAllAction
                       -> where('read_at', null)
                       -> get();
 
+        if ($notifications->isEmpty()) {
+            return $notifications;
+        }
+
         return DB::transaction(function () use ($notifications) {
             $notifications->each->update([
                 'read_at' => now()

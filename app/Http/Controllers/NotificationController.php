@@ -36,10 +36,16 @@ class NotificationController extends Controller
     {
         $this->authorize('read', $notification);
 
-        $action($notification);
+        try{
+            $action($notification);
 
-        return redirect($notification->data['url'] ?? route('notifications.index'))
+            return redirect($notification->data['url'] ?? route('notifications.index'))
             -> with('success', "一つの通知を既読状態にしました。");
+        } catch (\Exception $e) {
+            return redirect()
+            -> route('notifications.index')
+            -> with('error', "この通知はすでに既読になっています。");
+        }
     }
 
     public function readAll(User $user, InfoNotification $notifications, ReadAllAction $action): RedirectResponse
